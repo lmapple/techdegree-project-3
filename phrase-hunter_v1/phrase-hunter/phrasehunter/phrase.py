@@ -21,6 +21,7 @@ class Phrase():
             self.collection_names.append(str(char).lower())
             char = Character(char)
             self.collection.append(char)
+
         # Since spaces are counted as an automatic guess, these should be included
         # in the correct_count attribute.
         self.correct_count = (int(0)) + self.collection_names.count(" ")
@@ -29,6 +30,7 @@ class Phrase():
 
         # One letter can be guessed at a time.
         if len(guess) == 1 and str(guess).lower() in self.valid_guesses:
+
             # Each letter can only be guessed once.
             if str(guess).lower() in self.all_guesses:
                 print('{} has already been guessed. Please try again.'.format(str(guess)))
@@ -38,6 +40,7 @@ class Phrase():
                 #Check to see if this is a correct or incorrect guess.
                 if str(guess).lower() in self.collection_names:
                     self.correct_count += self.collection_names.count(str(guess.lower()))
+
                     # If guess is correct, redisplay the updated phrase.
                     for char in self.collection:
                       char.update(guess)
@@ -45,6 +48,7 @@ class Phrase():
                     print("\n")
                 else:
                     self.incorrect_count += 1
+
                     # If guess is incorrect, display number of incorrect guesses.
                     print('Incorrect Guesses: ' + str(self.incorrect_count))
         else:

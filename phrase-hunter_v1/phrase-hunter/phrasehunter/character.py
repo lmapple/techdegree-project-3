@@ -9,7 +9,9 @@ class Character():
     def __init__(self, char):
 
         self.original = str(char)
-        # If a character is a space, this counts as an automatic guess and should always show.
+
+        # If a character is a space, this counts as an automatic guess
+        # and should always show.
         if self.original == " ":
             self.was_guessed = True
         else:

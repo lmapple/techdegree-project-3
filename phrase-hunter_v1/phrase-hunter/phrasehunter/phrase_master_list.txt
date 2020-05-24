@@ -1,1 +1,5 @@
-
+Apple
+Pear
+Peach
+Banana
+Ice Cream
