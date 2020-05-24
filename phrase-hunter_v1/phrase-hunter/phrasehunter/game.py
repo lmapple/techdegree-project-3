@@ -5,28 +5,39 @@
 
 class Game():
 
-    def __init__(self,phrase):
+  def __init__(self):
+    import re,random
+    from phrasehunter.phrase import Phrase
 
-        from phrasehunter.phrase import Phrase
-        self.current_phrase = Phrase(phrase)
+    with open("phrasehunter/phrase_master_list.txt") as open_file:
+      data = open_file.read()
 
-    def start_game(self):
+    # Ensure there is at least one valid phrase in phrase_master_list.txt.
+    try:
+      random_phrase = random.choice(re.findall(r'[\w ]+[^\n\d_]',data))
+      self.current_phrase = Phrase(random_phrase)
 
-        print('Welcome to the Guess-That-Phrase! Guess the phrase to win!')
+    except IndexError as err:
+      print("There are currently no saved phrases. Please add at least one valid"
+            " phrase before playing the game.")
 
-        # Display the initial phrase with hidden characters.
-        for char in self.current_phrase.collection:
-            print(char.show(), end = "")
-        print("\n")
-        while self.current_phrase.correct_count < self.current_phrase.length and self.current_phrase.incorrect_count < int(5):
+  def start_game(self,*args):
+    print('Welcome to the Guess-That-Phrase! Guess the phrase to win!')
 
-            # Collect user guesses.
-            self.current_phrase.check_guess(input('What letter would you like to guess?   '))
+    # Display the initial phrase with hidden characters.
+    for char in self.current_phrase.collection:
+      print(char.show(), end = " ")
+    print("\n")
+    while self.current_phrase.correct_count < self.current_phrase.length and self.current_phrase.incorrect_count < int(5):
 
-        # If there are five incorrect guesses, the player loses.
-        if self.current_phrase.incorrect_count == 5:
-            print('Sorry, you lose. Only five incorrect guesses are allowed.')
+      # Collect user guesses.
+      self.current_phrase.check_guess(input('What letter would you like to guess?   '))
 
-        # If the player guesses all characters in the phrase, they win.
-        elif self.current_phrase.correct_count == self.current_phrase.length:
-            print('Congratulations! You guessed the phrase. You win.')
+    # If there are five incorrect guesses, the player loses.
+    if self.current_phrase.incorrect_count == 5:
+      print('Sorry, you lose. Only five incorrect guesses are allowed.')
+
+    # If the player guesses all characters in the phrase, they win.
+    elif self.current_phrase.correct_count == self.current_phrase.length:
+      print('Congratulations! You guessed the phrase. You win.')
+    print("Would you like to play again?")
